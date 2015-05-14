@@ -44,6 +44,6 @@ public class Shoot : MonoBehaviour {
 	void OnGUI(){
 		if (GUI.Button (new Rect (10, 10, 100, 100), "SHOOT!"))
 			FIRE = true;
-		GUI.Box (new Rect (280, 10, 200, 30), "你成功了射中 :" + score + "次");
+		GUI.Box (new Rect (380, 10, 200, 30), "你成功了射中 :" + score + "次");
 	}
 }
