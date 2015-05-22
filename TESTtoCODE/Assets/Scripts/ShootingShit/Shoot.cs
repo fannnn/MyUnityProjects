@@ -7,21 +7,20 @@ public class Shoot : MonoBehaviour {
 	public Transform MyShit;
 	public int score;
 	public float time = 1;
+	public GameObject MotherfuckerGO;
 	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
+		}
+		// Update is called once per frame
 	void Update () {
 		if (FIRE == true) 
 		{
-			transform.position += new Vector3(0,0,10);
+			MyShit.position += new Vector3(0,0,10);
 		}
-		if (transform.position.z > new Vector3 (0, 0, 200).z) 
+		if (MyShit.position.z > new Vector3 (0, 0, 200).z) 
 		{
 			FIRE = false;
-			transform.position = new Vector3 (0, 0, -100);
+			MyShit.position = new Vector3 (0, 0, -100);
 		}
 
 
@@ -29,21 +28,23 @@ public class Shoot : MonoBehaviour {
 		if (time > 0)
 			time -= Time.deltaTime;
 		else
-		if ((Motherfucker.position.x - MyShit.position.x) <= new Vector3 (10, 0, 0).x)
-		if ((Motherfucker.position.x - MyShit.position.x) >= new Vector3 (-10, 0, 0).x)
+		if (Motherfucker.position.x - MyShit.position.x <= new Vector3 (10, 0, 0).x)
+		if (Motherfucker.position.x - MyShit.position.x >= new Vector3 (-10, 0, 0).x)
 		if (Motherfucker.position.z - MyShit.position.z <= new Vector3 (0, 0, 10).z)
 		if (Motherfucker.position.z - MyShit.position.z >= new Vector3 (0, 0, -10).z) 
 			{
-					score += 1;
-					print ("BOOOOMMM!!!!");
-					time=1;
-			}		
-
-
+				score += 1;
+				MotherfuckerGO.GetComponent<Animator> ().Play ("hurt");
+				time=1;
+				FIRE = false;
+				MyShit.position = new Vector3 (0, 0, -100);
+			}
 	}
 	void OnGUI(){
-		if (GUI.Button (new Rect (10, 10, 100, 100), "SHOOT!"))
+		if (GUI.Button (new Rect (850, 290, 100, 100), "SHOOT!")) {
 			FIRE = true;
+			GetComponent<Animator>().Play("fire");
+		}	
 		GUI.Box (new Rect (380, 10, 200, 30), "你成功了射中 :" + score + "次");
 	}
 }

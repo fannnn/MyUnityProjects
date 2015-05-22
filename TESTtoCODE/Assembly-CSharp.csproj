@@ -48,6 +48,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ShootingShit\MoveCube.cs" />
      <Compile Include="Assets\Scripts\ShootingShit\Shoot.cs" />
+     <Compile Include="Assets\Scripts\ShootingShit\TEST.cs" />
+     <Compile Include="Assets\Scripts\TETforFUN.cs" />
      <Compile Include="Assets\Scripts\UselessShit.cs" />
      <Compile Include="Assets\Scripts\eatWhatShuffle.cs" />
      <Compile Include="Assets\Scripts\eatWhat_2.cs" />

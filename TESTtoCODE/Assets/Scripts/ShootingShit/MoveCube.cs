@@ -10,6 +10,7 @@ public class MoveCube : MonoBehaviour {
 	void Start () {
 		positionA = new Vector3(-100,0,0);
 		positionB = new Vector3(100,0,0);
+
 	}
 	
 	// Update is called once per frame
