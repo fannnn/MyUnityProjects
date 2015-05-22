@@ -23,15 +23,19 @@ public class Shoot : MonoBehaviour {
 			MyShit.position = new Vector3 (0, 0, -100);
 		}
 
-
-		//if(Motherfucker.position == MyShit.position)
+		float distance = Vector3.Distance (Motherfucker.position, MyShit.position);
 		if (time > 0)
 			time -= Time.deltaTime;
 		else
+			/*
 		if (Motherfucker.position.x - MyShit.position.x <= new Vector3 (10, 0, 0).x)
 		if (Motherfucker.position.x - MyShit.position.x >= new Vector3 (-10, 0, 0).x)
 		if (Motherfucker.position.z - MyShit.position.z <= new Vector3 (0, 0, 10).z)
 		if (Motherfucker.position.z - MyShit.position.z >= new Vector3 (0, 0, -10).z) 
+		*/
+			if(distance<10 )
+
+
 			{
 				score += 1;
 				MotherfuckerGO.GetComponent<Animator> ().Play ("hurt");
