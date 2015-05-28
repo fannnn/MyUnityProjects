@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\TheRoad\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\TheRoad\EnemyMovement.cs" />
      <Compile Include="Assets\Scripts\TheRoad\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\TheRoad\Restart.cs" />
      <Compile Include="Assets\Scripts\UselessShit.cs" />
      <Compile Include="Assets\Scripts\eatWhatShuffle.cs" />
      <Compile Include="Assets\Scripts\eatWhat_2.cs" />

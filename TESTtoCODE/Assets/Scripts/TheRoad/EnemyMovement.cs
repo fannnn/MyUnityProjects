@@ -16,6 +16,7 @@ public class EnemyMovement : MonoBehaviour {
 	public bool hurt;
 	public bool defense;
 	public bool dead;
+	public bool stun;
 	
 	
 	private float timer;
@@ -25,27 +26,28 @@ public class EnemyMovement : MonoBehaviour {
 	void Start () {
 		PlayerGO = GameObject.FindGameObjectWithTag("Player");
 		EnemyGO = gameObject;
-		health = 100;
 	}
 	
 	//執行
 	void Update () {
 		//基本資料狀態
-		if(health <= 0){
+		if (health <= 0) {
 			health = 0;
-			Dead();}
-		
+			if (dead == false)
+				Dead ();
+		}
 		
 		//判定是否進入戰鬥狀態
 		inBattle = false;
-		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO.transform.position) < 5)
+		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO.transform.position) < 4)
 			if(PlayerGO.GetComponent<PlayerMovement>().dead == false)
 				inBattle = true;
 		
 		
-		//判定無戰鬥狀態 繼續往前移動
+		//判定無戰鬥狀態 距離玩家夠近 還沒死 繼續往前移動
+		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO.transform.position) < 15)
 		if (inBattle == false) 
-		if(dead == false){
+		if (dead == false){
 			transform.position += new Vector3 (-0.1f, 0, 0);
 		}
 		
@@ -54,14 +56,16 @@ public class EnemyMovement : MonoBehaviour {
 		defenseCD -= Time.deltaTime;
 		//攻擊判定
 		if(inBattle ==true)
+			if(stun ==false)
 			if(dead == false)
+			if(hurt == false)
 				if(attackCD < 0){
-					Attack();
-					Invoke("Attack0",0.3f);
+					StartCoroutine(Attack());
+
 				
 				
 				
-				attackCD = 1;
+				attackCD = 1.5f;
 			}
 		
 		
@@ -84,44 +88,60 @@ public class EnemyMovement : MonoBehaviour {
 	
 	
 	
-	public void Attack (){
-		attack = true;
-		Model.GetComponent<Animator> ().Play ("attack");
-		attack = false;
+	public IEnumerator Attack (){
+		if (dead == false) {
+			attack = true;
+			Model.GetComponent<Animator> ().Play ("attack");
+			yield return new WaitForSeconds (1);
+			if(dead == false)if(stun == false)
+			AttackEnemy();
+			attack = false;
+		}
 	}
-	public void Hurt(){
-		hurt = true;
-		Model.GetComponent<Animator> ().Play ("hurt");
-		hurt = false;
+	public IEnumerator Hurt(){
+		if (dead == false) {
+			hurt = true;
+			if (attack == false)
+				Model.GetComponent<Animator> ().Play ("hurt");
+			yield return new WaitForSeconds (1);
+			hurt = false;
+		}
 	}
 	public IEnumerator Defense(){
-		defense = true;
-		Model.GetComponent<Animator> ().Play ("defense");
-		yield return new WaitForSeconds(0.5f);
-		defense = false;
+		if (dead == false) {
+			defense = true;
+			Model.GetComponent<Animator> ().Play ("defense");
+			yield return new WaitForSeconds (0.5f);
+			defense = false;
+		}
 	}
 	public void Dead(){
-		dead = true;
 		Model.GetComponent<Animator> ().Play ("dead");
-	}//處理死亡
-
+		dead = true;
+		//處理死亡
+	}
+	public IEnumerator Stun(){
+		if (dead == false) {
+			stun = true;
+			Model.GetComponent<Animator> ().Play ("hurt");
+			yield return new WaitForSeconds (2);
+			stun = false;
+		}
+	}
 	
 	
 	
 	
-	//攻擊那些王八羔子(0)
-	void Attack0(){
-		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO.transform.position) < 5)
-		{
+	//攻擊那些王八羔子
+	void AttackEnemy(){
+		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO.transform.position) < 5){
 			//擊中，執行傷害與演出
 			if(PlayerGO.GetComponent<PlayerMovement>().defense == false)
 			{PlayerGO.GetComponent<PlayerMovement> ().health -= 10;
-				PlayerGO.GetComponent<PlayerMovement> ().Hurt();}
-			//失敗
+				StartCoroutine(PlayerGO.GetComponent<PlayerMovement> ().Hurt());}
+			//被防禦，自身受到暈眩
 			if(PlayerGO.GetComponent<PlayerMovement>().defense == true)
-			{Model.GetComponent<Animator> ().Play ("hurt");
-				print ("defend success");
-			}
+			{StartCoroutine(Stun());}
 		}
 	}
 	
