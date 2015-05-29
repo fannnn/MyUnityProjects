@@ -103,7 +103,7 @@ public class EnemyMovement : MonoBehaviour {
 			hurt = true;
 			if (attack == false)
 				Model.GetComponent<Animator> ().Play ("hurt");
-			yield return new WaitForSeconds (1);
+			yield return new WaitForSeconds (0.3f);
 			hurt = false;
 		}
 	}

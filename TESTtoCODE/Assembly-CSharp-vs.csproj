@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\TETforFUN.cs" />
      <Compile Include="Assets\Scripts\TheRoad\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\TheRoad\EnemyMovement.cs" />
+     <Compile Include="Assets\Scripts\TheRoad\PlayerAttacker.cs" />
      <Compile Include="Assets\Scripts\TheRoad\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\TheRoad\Restart.cs" />
      <Compile Include="Assets\Scripts\UselessShit.cs" />

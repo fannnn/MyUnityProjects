@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour {
 	public GameObject EnemyCol;
 
 	public AudioClip[] audioClip;
-	private float timer;
 
 
 	//初始化設置
@@ -33,11 +32,12 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	void OnCollisionStay (Collision col)
 	{
-		EnemyCol = col.gameObject;
-		if (EnemyCol.GetComponent<EnemyMovement> ().dead == true) {
-			inBattle = false;
-			EnemyCol.GetComponent<BoxCollider>().enabled = !enabled;
+		if (col.gameObject.tag == ("Enemy")) {
+			EnemyCol = col.gameObject;
+			print (EnemyCol);
 		}
+
+
 	}
 	//執行
 	void Update () {
@@ -49,29 +49,15 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		//判定是否進入戰鬥狀態
-
-		if(EnemyCol != null)
-		if(Vector3.Distance(PlayerGO.transform.position,EnemyCol.transform.position)<4)
-		   if(EnemyCol.GetComponent<EnemyMovement>().dead == false)
-		   inBattle = true;
-//		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [0].transform.position) < 4)
-//			if(EnemyGO[0].GetComponent<EnemyMovement>().dead == false)
-//			inBattle = true;
-//		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [1].transform.position) < 4)
-//			if(EnemyGO[1].GetComponent<EnemyMovement>().dead == false)
-//				inBattle = true;
-//		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [2].transform.position) < 4)
-//			if(EnemyGO[2].GetComponent<EnemyMovement>().dead == false)
-//				inBattle = true;
-//		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [3].transform.position) < 4)
-//			if(EnemyGO[3].GetComponent<EnemyMovement>().dead == false)
-//				inBattle = true;
-//		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [4].transform.position) < 4)
-//			if(EnemyGO[4].GetComponent<EnemyMovement>().dead == false)
-//				inBattle = true;
-//		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [5].transform.position) < 4)
-//			if(EnemyGO[5].GetComponent<EnemyMovement>().dead == false)
-//				inBattle = true;
+		if (EnemyCol != null) {
+			if (Vector3.Distance (PlayerGO.transform.position, EnemyCol.transform.position) < 4)
+			if (EnemyCol.GetComponent<EnemyMovement> ().dead == false)
+				inBattle = true;
+			if (EnemyCol.GetComponent<EnemyMovement> ().dead == true) {
+				inBattle = false;
+				EnemyCol.GetComponent<BoxCollider>().enabled = !enabled;
+			}
+		}
 		//判定無戰鬥狀態 繼續往前移動
 		if (inBattle == false) 
 			if(stopMoving == false)
@@ -125,8 +111,12 @@ public class PlayerMovement : MonoBehaviour {
 			yield return new WaitForSeconds (0.3f);
 			if(defense == false)if(stun == false)if(hurt == false)if(dead == false)
 			{	AttackEnemy();
+				GameObject.Find ("attacker").transform.localPosition = new Vector3 (0, 0, 0);
+
 				PlaySound(0);
 			}
+			yield return new WaitForSeconds (0.1f);
+			GameObject.Find ("attacker").transform.localPosition = new Vector3 (-5, 0, 0);
 			attack = false;
 		}
 	}
@@ -169,77 +159,16 @@ public class PlayerMovement : MonoBehaviour {
 
 	//攻擊那些王八羔子
 	void AttackEnemy(){
-		if (Vector3.Distance (PlayerGO.transform.position, EnemyCol.transform.position) < 5) {//擊中，執行傷害與演出
-			if (EnemyCol.GetComponent<EnemyMovement> ().defense == false) {
-				EnemyCol.GetComponent<EnemyMovement> ().health -= 10;
-				StartCoroutine (EnemyCol.GetComponent<EnemyMovement> ().Hurt ());
-			}
-			//失敗
-			if (EnemyCol.GetComponent<EnemyMovement> ().defense == true) {
-				StartCoroutine (Stun ());
-			}
-		}
-//			if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [0].transform.position) < 5) {//擊中，執行傷害與演出
-//				if (EnemyGO [0].GetComponent<EnemyMovement> ().defense == false) {
-//					EnemyGO [0].GetComponent<EnemyMovement> ().health -= 10;
-//					StartCoroutine (EnemyGO [0].GetComponent<EnemyMovement> ().Hurt ());
-//				}
-//				//失敗
-//				if (EnemyGO [0].GetComponent<EnemyMovement> ().defense == true) {
-//					StartCoroutine (Stun ());
-//				}
+//		if (Vector3.Distance (PlayerGO.transform.position, EnemyCol.transform.position) < 5) {//擊中，執行傷害與演出
+//			if (EnemyCol.GetComponent<EnemyMovement> ().defense == false) {
+//				EnemyCol.GetComponent<EnemyMovement> ().health -= 10;
+//				StartCoroutine (EnemyCol.GetComponent<EnemyMovement> ().Hurt ());
 //			}
-//			if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [1].transform.position) < 5) {//擊中，執行傷害與演出
-//				if (EnemyGO [1].GetComponent<EnemyMovement> ().defense == false) {
-//					EnemyGO [1].GetComponent<EnemyMovement> ().health -= 10;
-//					StartCoroutine (EnemyGO [1].GetComponent<EnemyMovement> ().Hurt ());
-//				}
-//				//失敗
-//				if (EnemyGO [1].GetComponent<EnemyMovement> ().defense == true) {
-//					StartCoroutine (Stun ());
-//				}
+//			//失敗
+//			if (EnemyCol.GetComponent<EnemyMovement> ().defense == true) {
+//				StartCoroutine (Stun ());
 //			}
-//			if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [2].transform.position) < 5) {//擊中，執行傷害與演出
-//				if (EnemyGO [2].GetComponent<EnemyMovement> ().defense == false) {
-//					EnemyGO [2].GetComponent<EnemyMovement> ().health -= 10;
-//					StartCoroutine (EnemyGO [2].GetComponent<EnemyMovement> ().Hurt ());
-//				}
-//				//失敗
-//				if (EnemyGO [2].GetComponent<EnemyMovement> ().defense == true) {
-//					StartCoroutine (Stun ());
-//				}
-//			}
-//			if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [3].transform.position) < 5) {//擊中，執行傷害與演出
-//				if (EnemyGO [3].GetComponent<EnemyMovement> ().defense == false) {
-//					EnemyGO [3].GetComponent<EnemyMovement> ().health -= 10;
-//					StartCoroutine (EnemyGO [3].GetComponent<EnemyMovement> ().Hurt ());
-//				}
-//				//失敗
-//				if (EnemyGO [0].GetComponent<EnemyMovement> ().defense == true) {
-//					StartCoroutine (Stun ());
-//				}
-//			}
-//			if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [4].transform.position) < 5) {//擊中，執行傷害與演出
-//				if (EnemyGO [4].GetComponent<EnemyMovement> ().defense == false) {
-//					EnemyGO [4].GetComponent<EnemyMovement> ().health -= 10;
-//					StartCoroutine (EnemyGO [4].GetComponent<EnemyMovement> ().Hurt ());
-//				}
-//				//失敗
-//				if (EnemyGO [4].GetComponent<EnemyMovement> ().defense == true) {
-//					StartCoroutine (Stun ());
-//				}
-//			}
-//			if (Vector3.Distance (PlayerGO.transform.position, EnemyGO [5].transform.position) < 5) {//擊中，執行傷害與演出
-//				if (EnemyGO [5].GetComponent<EnemyMovement> ().defense == false) {
-//					EnemyGO [5].GetComponent<EnemyMovement> ().health -= 10;
-//					StartCoroutine (EnemyGO [5].GetComponent<EnemyMovement> ().Hurt ());
-//				}
-//				//失敗
-//				if (EnemyGO [5].GetComponent<EnemyMovement> ().defense == true) {
-//					StartCoroutine (Stun ());
-//				}
-//			}
-
+//		}
 
 
 
