@@ -1,10 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TheRoad\PlayerAttacker.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TheRoad\PlayerMovement.cs">
     <Files>
-      <File FileName="Assets\Scripts\TheRoad\PlayerMovement.cs" Line="119" Column="74" />
-      <File FileName="Assets\Scripts\TheRoad\PlayerAttacker.cs" Line="19" Column="8" />
-      <File FileName="Assets\Scripts\TheRoad\EnemyMovement.cs" Line="106" Column="41" />
+      <File FileName="Assets\Scripts\TheRoad\PlayerMovement.cs" Line="150" Column="28" />
+      <File FileName="Assets\Scripts\TheRoad\Restart.cs" Line="27" Column="135" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

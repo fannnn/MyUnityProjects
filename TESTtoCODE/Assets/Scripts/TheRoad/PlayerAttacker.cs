@@ -5,6 +5,7 @@ public class PlayerAttacker : MonoBehaviour {
 
 	public GameObject EnemyCol;
 	public GameObject PlayerGO;
+	public int AtkDMG;
 
 	void OnTriggerEnter(Collider col)
 	{	
@@ -12,8 +13,8 @@ public class PlayerAttacker : MonoBehaviour {
 			EnemyCol = col.gameObject;
 
 		if (EnemyCol != null) {
-			if (EnemyCol.GetComponent<EnemyMovement> ().defense == false)if (EnemyCol.GetComponent<EnemyMovement> ().hurt == false){
-				EnemyCol.GetComponent<EnemyMovement> ().health -= 70;
+			if (EnemyCol.GetComponent<EnemyMovement> ().defense == false){
+				EnemyCol.GetComponent<EnemyMovement> ().health -= AtkDMG;
 				StartCoroutine (EnemyCol.GetComponent<EnemyMovement> ().Hurt ());
 				}
 			//失敗

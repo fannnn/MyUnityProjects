@@ -39,7 +39,7 @@ public class EnemyMovement : MonoBehaviour {
 		
 		//判定是否進入戰鬥狀態
 		inBattle = false;
-		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO.transform.position) < 4)
+		if (Vector3.Distance (PlayerGO.transform.position, EnemyGO.transform.position) < 3)
 			if(PlayerGO.GetComponent<PlayerMovement>().dead == false)
 				inBattle = true;
 		
